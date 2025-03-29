@@ -19,6 +19,12 @@ Safe Map is not an open app — it is a **secure ecosystem**. Here's how it work
 - ✅ This avoids trolls, fake accounts, and potential threats infiltrating the community.
 - ✅ Authentication is anonymous by default, with optional email or phone upgrade.
 - ✅ User verification is done via Firebase + internal Firestore-based approval logic.
+  
+<p align="center">
+  <img src="https://github.com/user-attachments/assets/a4c650b9-61b0-431d-8ef2-c08130ed6964" alt="Safe Map – Authentication & Invitation Flow" width="700"/>
+</p>
+
+
 
 ---
 
