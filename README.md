@@ -1,12 +1,5 @@
 # 🛡️ Safe Map – Secure Mapping for Women
 
-[![Build Status](https://github.com/felipePSH/safe-map/actions/workflows/android.yml/badge.svg)](https://github.com/felipePSH/safe-map/actions)
-[![Coverage Status](https://codecov.io/gh/felipePSH/safe-map/branch/main/graph/badge.svg)](https://codecov.io/gh/felipePSH/safe-map)
-![Firebase Hosting](https://img.shields.io/badge/firebase-hosting-yellow?logo=firebase)
-![Kotlin](https://img.shields.io/badge/Kotlin-2.0.21-blue?logo=kotlin)
-![Tech Stack](https://img.shields.io/badge/Stack-Compose%20%7C%20Hilt%20%7C%20Firebase%20%7C%20Retrofit-informational)
-![License](https://img.shields.io/github/license/felipePSH/safe-map)
-
 **Safe Map** is a privacy-first mobile application that enables women to share real-time alerts about dangerous areas on a collaborative map. Built with safety, community, and trust at its core, the app empowers women to protect one another by reporting unsafe locations in their cities.
 
 ---
