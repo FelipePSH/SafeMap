@@ -1,0 +1,67 @@
+## ✅ Pull Request Title
+
+<!-- Escreva um título curto e significativo no formato: type(scope): description -->
+feat(auth): implement invite code flow with persistent session
+
+---
+
+## 📝 Description
+
+<!-- Explique o que foi feito neste PR, incluindo o porquê das mudanças e seu impacto no app. Seja claro, técnico e objetivo. -->
+
+This PR introduces:
+- Invite code approval flow for restricted user access
+- Persistent session using DataStore
+- Navigation improvements after approval
+- Full integration with Firebase Auth and Firestore
+
+---
+
+## 📂 Changed Files
+
+<!-- Liste os arquivos modificados (ou adicione um link para o diff no GitHub). -->
+
+- `AccessDeniedViewModel.kt`
+- `SplashScreenViewModel.kt`
+- `DataStoreManager.kt`
+- `InviteRepository.kt` / `InviteRepositoryImpl.kt`
+- `AuthModule.kt`
+- `NavDestination.kt`
+- `HomeScreen.kt`
+- `MainActivity.kt`
+- Gradle config and launcher icon
+
+---
+
+## 🔍 Test Plan
+
+<!-- Marque o que foi testado manualmente ou automaticamente -->
+
+- [x] User is redirected to Home if approved
+- [x] Invite code works and updates DataStore
+- [x] Session persists after app restart
+- [x] Fallback to Firebase anonymous auth
+- [x] Navigation works as expected
+
+---
+
+## 📦 Dependencies
+
+- Firebase Authentication
+- Firebase Firestore
+- AndroidX DataStore
+
+---
+
+## ⚠️ Notes
+
+<!-- Informações importantes para o revisor ou anotações técnicas para futuros devs -->
+
+- DataStore replaces the need for EncryptedSharedPrefs for boolean flags.
+- Next step: Create a proper User model with metadata like `name`, `email`, etc.
+
+---
+
+## 📸 Screenshots
+
+<!-- (Opcional) Adicione imagens do app após as mudanças -->
