@@ -1,15 +1,17 @@
 package com.felipe.santos.safemap.presentation.ui.theme
-import android.os.Build
+
 import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.darkColorScheme
-import androidx.compose.material3.dynamicDarkColorScheme
-import androidx.compose.material3.dynamicLightColorScheme
 import androidx.compose.material3.lightColorScheme
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.Immutable
-import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.platform.LocalContext
+
+enum class ContrastLevel {
+    NORMAL,
+    MEDIUM,
+    HIGH
+}
 
 private val lightScheme = lightColorScheme(
     primary = primaryLight,
@@ -241,36 +243,33 @@ private val highContrastDarkColorScheme = darkColorScheme(
 
 @Immutable
 data class ColorFamily(
-    val color: Color,
-    val onColor: Color,
-    val colorContainer: Color,
-    val onColorContainer: Color
+    val color: androidx.compose.ui.graphics.Color,
+    val onColor: androidx.compose.ui.graphics.Color,
+    val colorContainer: androidx.compose.ui.graphics.Color,
+    val onColorContainer: androidx.compose.ui.graphics.Color
 )
 
 val unspecified_scheme = ColorFamily(
-    Color.Unspecified, Color.Unspecified, Color.Unspecified, Color.Unspecified
+    androidx.compose.ui.graphics.Color.Unspecified,
+    androidx.compose.ui.graphics.Color.Unspecified,
+    androidx.compose.ui.graphics.Color.Unspecified,
+    androidx.compose.ui.graphics.Color.Unspecified
 )
 
 @Composable
 fun SafeMapTheme(
     darkTheme: Boolean = isSystemInDarkTheme(),
-    dynamicColor: Boolean = true,
-    content: @Composable() () -> Unit
+    contrast: ContrastLevel = ContrastLevel.NORMAL,
+    content: @Composable () -> Unit
 ) {
-  val colorScheme = when {
-      dynamicColor && Build.VERSION.SDK_INT >= Build.VERSION_CODES.S -> {
-          val context = LocalContext.current
-          if (darkTheme) dynamicDarkColorScheme(context) else dynamicLightColorScheme(context)
-      }
-      
-      darkTheme -> darkScheme
-      else -> lightScheme
-  }
-
-  MaterialTheme(
-    colorScheme = colorScheme,
-    typography = AppTypography,
-    content = content
-  )
+    val colorScheme = when (contrast) {
+        ContrastLevel.NORMAL -> if (darkTheme) darkScheme else lightScheme
+        ContrastLevel.MEDIUM -> if (darkTheme) mediumContrastDarkColorScheme else mediumContrastLightColorScheme
+        ContrastLevel.HIGH -> if (darkTheme) highContrastDarkColorScheme else highContrastLightColorScheme
+    }
+    MaterialTheme(
+        colorScheme = colorScheme,
+        typography = AppTypography,
+        content = content
+    )
 }
-
