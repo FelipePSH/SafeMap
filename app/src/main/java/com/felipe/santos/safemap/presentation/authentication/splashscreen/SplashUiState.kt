@@ -1,4 +1,4 @@
-package com.felipe.santos.safemap.presentation.splashscreen
+package com.felipe.santos.safemap.presentation.authentication.splashscreen
 
 sealed class SplashUiState {
     object Loading : SplashUiState()

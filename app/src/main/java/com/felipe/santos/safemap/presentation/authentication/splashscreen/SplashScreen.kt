@@ -1,8 +1,10 @@
-package com.felipe.santos.safemap.presentation.splashscreen
+package com.felipe.santos.safemap.presentation.authentication.splashscreen
 
+import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.material3.CircularProgressIndicator
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
@@ -25,27 +27,46 @@ fun SplashScreen(
 
     when (state) {
         is SplashUiState.Loading -> {
-            Box(modifier = Modifier.fillMaxSize(), contentAlignment = Alignment.Companion.Center) {
-                CircularProgressIndicator()
+            Box(
+                modifier = Modifier
+                    .fillMaxSize()
+                    .background(MaterialTheme.colorScheme.background),
+                contentAlignment = Alignment.Center
+            ) {
+                CircularProgressIndicator(
+                    color = MaterialTheme.colorScheme.primary
+                )
             }
         }
+
         is SplashUiState.Approved -> {
-            LaunchedEffect(Unit) {
+            LaunchedEffect(true) {
                 navController.navigate(Home) {
                     popUpTo(Splash) { inclusive = true }
                 }
             }
         }
+
         is SplashUiState.NotApproved -> {
-            LaunchedEffect(Unit) {
+            LaunchedEffect(true) {
                 navController.navigate(AccessDenied) {
                     popUpTo(Splash) { inclusive = true }
                 }
             }
         }
+
         is SplashUiState.Error -> {
-            Box(modifier = Modifier.fillMaxSize(), contentAlignment = Alignment.Center) {
-                Text("Something went wrong")
+            Box(
+                modifier = Modifier
+                    .fillMaxSize()
+                    .background(MaterialTheme.colorScheme.background),
+                contentAlignment = Alignment.Center
+            ) {
+                Text(
+                    text = "Something went wrong",
+                    style = MaterialTheme.typography.bodyLarge,
+                    color = MaterialTheme.colorScheme.error
+                )
             }
         }
     }
