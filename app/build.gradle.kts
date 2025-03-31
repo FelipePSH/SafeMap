@@ -50,7 +50,7 @@ android {
 }
 
 dependencies {
-    // Core e Compose
+    // Core and Compose
     implementation(libs.androidx.core.ktx)
     implementation(libs.androidx.lifecycle.runtime.ktx)
     implementation(libs.androidx.activity.compose)
@@ -59,6 +59,7 @@ dependencies {
     implementation(libs.androidx.ui.graphics)
     implementation(libs.androidx.ui.tooling.preview)
     implementation(libs.androidx.material3)
+    implementation(libs.androidx.foundation)
 
     // Navigation Compose
     implementation(libs.androidx.navigation.compose)
@@ -72,6 +73,8 @@ dependencies {
     implementation(platform(libs.firebase.bom))
     implementation(libs.firebase.firestore)
     implementation(libs.firebase.analytics)
+    implementation(libs.firebase.auth.ktx)
+    implementation(libs.androidx.datastore.preferences)
 
     // Google Maps
     implementation(libs.maps.compose)
