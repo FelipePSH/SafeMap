@@ -6,7 +6,7 @@ import androidx.navigation.NavController
 import com.felipe.santos.safemap.data.local.DataStoreManager
 import com.felipe.santos.safemap.domain.usecase.ApproveUserWithInviteCodeUseCase
 import com.felipe.santos.safemap.presentation.navigation.AccessDenied
-import com.felipe.santos.safemap.presentation.navigation.Home
+import com.felipe.santos.safemap.presentation.navigation.SafeMap
 import com.google.firebase.auth.FirebaseAuth
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -38,7 +38,7 @@ class AccessDeniedViewModel @Inject constructor(
                 val result = useCase(inviteCode.value, user)
                 if (result.isSuccess) {
                     dataStore.setApproved(true)
-                    navController.navigate(Home) {
+                    navController.navigate(SafeMap) {
                         popUpTo(AccessDenied) { inclusive = true }
                     }
                 } else {

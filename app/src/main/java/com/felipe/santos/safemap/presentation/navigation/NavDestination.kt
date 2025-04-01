@@ -6,15 +6,15 @@ import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import com.felipe.santos.safemap.presentation.authentication.accessdenied.AccessDeniedScreen
-import com.felipe.santos.safemap.presentation.home.HomeScreen
 import com.felipe.santos.safemap.presentation.authentication.splashscreen.SplashScreen
+import com.felipe.santos.safemap.presentation.home.SafeMapScreen
 import kotlinx.serialization.Serializable
 
 @Serializable
 object Splash
 
 @Serializable
-object Home
+object SafeMap
 
 @Serializable
 object AccessDenied
@@ -35,8 +35,8 @@ fun AppNavHost(
         composable <AccessDenied>{
             AccessDeniedScreen(navController)
         }
-        composable <Home>{
-            HomeScreen()
+        composable <SafeMap>{
+            SafeMapScreen()
         }
     }
 }
