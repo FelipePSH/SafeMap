@@ -5,7 +5,7 @@ import com.google.firebase.firestore.GeoPoint
 
 data class AlertModel(
     val id: String = "",
-    val title: String = "",
+    val type: AlertType = AlertType.VERBAL,
     val description: String = "",
     val location: GeoPoint = GeoPoint(0.0, 0.0),
     val timestamp: Timestamp = Timestamp.now(),

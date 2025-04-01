@@ -65,7 +65,7 @@ class SafeMapViewModel @Inject constructor(
         }
 
         return AlertUiModel(
-            title = this.title,
+            type = this.type,
             description = this.description,
             timestampFormatted = formattedTimestamp,
             latitude = this.latitude,

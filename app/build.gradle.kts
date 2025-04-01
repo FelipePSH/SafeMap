@@ -81,6 +81,7 @@ dependencies {
     implementation(libs.maps.compose)
     implementation(libs.play.services.maps)
     implementation(libs.play.services.location)
+    implementation(libs.maps.compose.utils)
 
     // Kotlin Coroutines
     implementation(libs.kotlinx.coroutines.core)

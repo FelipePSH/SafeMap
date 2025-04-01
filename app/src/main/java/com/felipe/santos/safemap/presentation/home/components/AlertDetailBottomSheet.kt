@@ -25,7 +25,7 @@ import com.felipe.santos.safemap.presentation.ui.theme.SafeMapTheme
 @Composable
 fun AlertDetailBottomSheet(
     modifier: Modifier = Modifier,
-    title: String,
+    type: String,
     description: String,
     timestamp: String,
     confirmations: Int,
@@ -40,7 +40,7 @@ fun AlertDetailBottomSheet(
                 .padding(16.dp)
         ) {
             Text(
-                text = title,
+                text = type,
                 style = MaterialTheme.typography.titleMedium,
             )
             Spacer(modifier = Modifier.height(8.dp))
@@ -80,7 +80,7 @@ fun AlertDetailBottomSheet(
 fun PreviewAlertDetailBottomSheet() {
     SafeMapTheme {
         AlertDetailBottomSheet(
-            title = "Verbal harassment",
+            type = "Verbal harassment",
             description = "Man screaming with a woman in the street",
             timestamp = "2025-04-01 08:16",
             confirmations = 5,
