@@ -9,4 +9,7 @@ interface AlertRepository {
     suspend fun confirmAlert(alertId: String, userId: String)
 
     suspend fun hasUserConfirmed(alertId: String, userId: String): Boolean
+
+    suspend fun addAlert(alert: AlertModel)
+
 }

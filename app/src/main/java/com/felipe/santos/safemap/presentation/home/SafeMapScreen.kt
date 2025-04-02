@@ -2,26 +2,34 @@ package com.felipe.santos.safemap.presentation.home
 
 import android.Manifest
 import android.content.pm.PackageManager
-import android.graphics.Bitmap
+import android.graphics.Canvas
 import android.widget.Toast
 import androidx.activity.compose.rememberLauncherForActivityResult
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.runtime.*
+import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
-import androidx.compose.ui.res.painterResource
 import androidx.core.content.ContextCompat
 import androidx.core.content.res.ResourcesCompat
+import androidx.core.graphics.createBitmap
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.felipe.santos.safemap.presentation.home.components.AlertDetailBottomSheet
+import com.felipe.santos.safemap.presentation.home.components.NewAlertBottomSheet
 import com.felipe.santos.safemap.presentation.mapper.AlertIconMapper
 import com.google.android.gms.maps.CameraUpdateFactory
-import com.google.android.gms.maps.model.LatLng
-import com.google.maps.android.compose.*
 import com.google.android.gms.maps.model.BitmapDescriptorFactory
-import androidx.core.graphics.createBitmap
-import android.graphics.Canvas
+import com.google.android.gms.maps.model.LatLng
+import com.google.maps.android.compose.GoogleMap
+import com.google.maps.android.compose.MapProperties
+import com.google.maps.android.compose.MapUiSettings
+import com.google.maps.android.compose.Marker
+import com.google.maps.android.compose.rememberCameraPositionState
+import com.google.maps.android.compose.rememberMarkerState
 
 @Composable
 fun SafeMapScreen(
@@ -60,13 +68,26 @@ fun SafeMapScreen(
         }
     }
 
+    val focusPosition by viewModel.focusPosition.collectAsState()
+
+    LaunchedEffect(focusPosition) {
+        focusPosition?.let {
+            cameraPositionState.move(
+                CameraUpdateFactory.newLatLngZoom(it, 15f)
+            )
+        }
+    }
+
     val alerts by viewModel.alerts.collectAsState()
 
     GoogleMap(
         modifier = Modifier.fillMaxSize(),
         cameraPositionState = cameraPositionState,
         properties = MapProperties(isMyLocationEnabled = hasPermission),
-        uiSettings = MapUiSettings(zoomControlsEnabled = true)
+        uiSettings = MapUiSettings(zoomControlsEnabled = true),
+        onMapLongClick = { latLng ->
+            viewModel.onMapClick(latLng)
+        }
     ) {
         alerts.forEach { alert ->
             val icon = remember(alert.type) {
@@ -108,4 +129,18 @@ fun SafeMapScreen(
             onDismiss = { viewModel.clearSelectedAlert() }
         )
     }
+
+    val clickedLocation by viewModel.clickedLocation.collectAsState()
+
+    clickedLocation?.let { latLng ->
+        NewAlertBottomSheet(
+            latLng = latLng,
+            onSubmit = { type, description ->
+                viewModel.submitNewAlert(type, description, latLng)
+            },
+            onDismiss = { viewModel.clearClickedLocation() }
+        )
+    }
+
+
 }

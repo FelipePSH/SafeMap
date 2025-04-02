@@ -5,10 +5,14 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.felipe.santos.safemap.domain.location.LocationProvider
 import com.felipe.santos.safemap.domain.model.AlertModel
+import com.felipe.santos.safemap.domain.model.AlertType
 import com.felipe.santos.safemap.domain.repository.AlertRepository
 import com.felipe.santos.safemap.domain.usecase.GetFilteredAlertsUseCase
 import com.felipe.santos.safemap.presentation.model.AlertUiModel
+import com.google.android.gms.maps.model.LatLng
+import com.google.firebase.Timestamp
 import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.firestore.GeoPoint
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
@@ -42,8 +46,40 @@ class SafeMapViewModel @Inject constructor(
     private val _hasUserConfirmed = MutableStateFlow(false)
     val hasUserConfirmed: StateFlow<Boolean> = _hasUserConfirmed
 
+    private val _clickedLocation = MutableStateFlow<LatLng?>(null)
+    val clickedLocation: StateFlow<LatLng?> = _clickedLocation
+
+    private val _focusPosition = MutableStateFlow<LatLng?>(null)
+    val focusPosition: StateFlow<LatLng?> = _focusPosition
+
     init {
         observeAlerts()
+    }
+
+    fun onMapClick(latLng: LatLng) {
+        _clickedLocation.value = latLng
+        println("Map clicked at: ${latLng.latitude}, ${latLng.longitude}")
+    }
+
+    fun clearClickedLocation() {
+        _clickedLocation.value = null
+    }
+
+    fun submitNewAlert(type: AlertType, description: String, latLng: LatLng) {
+        viewModelScope.launch {
+            val userId = FirebaseAuth.getInstance().currentUser?.uid ?: return@launch
+            val newAlert = AlertModel(
+                type = type,
+                description = description,
+                location = GeoPoint(latLng.latitude, latLng.longitude),
+                timestamp = Timestamp.now(),
+                createdBy = userId,
+                confirmations = 0
+            )
+            alertRepository.addAlert(newAlert)
+            _focusPosition.value = latLng
+            _clickedLocation.value = null
+        }
     }
 
     private fun observeAlerts() {

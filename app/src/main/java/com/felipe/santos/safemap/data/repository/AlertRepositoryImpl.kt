@@ -21,7 +21,7 @@ class AlertRepositoryImpl @Inject constructor(
                     return@addSnapshotListener
                 }
 
-                if (snapshot != null && !snapshot.isEmpty) {
+                if (snapshot != null) {
                     val alerts = snapshot.documents.mapNotNull { doc ->
                         doc.toObject(AlertModel::class.java)?.copy(id = doc.id)
                     }
@@ -58,5 +58,11 @@ class AlertRepositoryImpl @Inject constructor(
             .document(userId)
 
         return confirmationRef.get().await().exists()
+    }
+
+    override suspend fun addAlert(alert: AlertModel) {
+        firestore.collection("alerts")
+            .add(alert)
+            .await()
     }
 }
