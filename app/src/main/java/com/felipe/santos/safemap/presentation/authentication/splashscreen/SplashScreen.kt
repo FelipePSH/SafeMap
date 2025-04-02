@@ -14,9 +14,9 @@ import androidx.compose.ui.Modifier
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
 import com.felipe.santos.safemap.presentation.navigation.AccessDenied
-import com.felipe.santos.safemap.presentation.navigation.Home
 import com.felipe.santos.safemap.presentation.navigation.Splash
 import androidx.compose.runtime.getValue
+import com.felipe.santos.safemap.presentation.navigation.SafeMap
 
 @Composable
 fun SplashScreen(
@@ -41,7 +41,7 @@ fun SplashScreen(
 
         is SplashUiState.Approved -> {
             LaunchedEffect(true) {
-                navController.navigate(Home) {
+                navController.navigate(SafeMap) {
                     popUpTo(Splash) { inclusive = true }
                 }
             }
