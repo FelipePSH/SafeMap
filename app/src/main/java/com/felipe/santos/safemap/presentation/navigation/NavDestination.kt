@@ -5,8 +5,10 @@ import androidx.compose.ui.Modifier
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
+import com.felipe.santos.safemap.presentation.alerts.AlertsScreen
 import com.felipe.santos.safemap.presentation.authentication.accessdenied.AccessDeniedScreen
 import com.felipe.santos.safemap.presentation.authentication.splashscreen.SplashScreen
+import com.felipe.santos.safemap.presentation.emergency.EmergencyScreen
 import com.felipe.santos.safemap.presentation.home.SafeMapScreen
 import kotlinx.serialization.Serializable
 
@@ -18,6 +20,12 @@ object SafeMap
 
 @Serializable
 object AccessDenied
+
+@Serializable
+object Alerts
+
+@Serializable
+object Emergency
 
 @Composable
 fun AppNavHost(
@@ -38,5 +46,14 @@ fun AppNavHost(
         composable <SafeMap>{
             SafeMapScreen()
         }
+
+        composable<Alerts> {
+            AlertsScreen()
+        }
+
+        composable<Emergency> {
+            EmergencyScreen()
+        }
+
     }
 }
